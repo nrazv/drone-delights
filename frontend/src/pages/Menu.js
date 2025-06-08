@@ -22,13 +22,13 @@ function Menu() {
   }, []);
 
   return (
-    <>
+    <div>
       <SearchAndFilter />
       <Box
-        display={"flex"}
-        flexDirection={"row"}
-        flexWrap={"wrap"}
-        justifyContent={"center"}
+        display="grid"
+        gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+        justifyItems="center"
+        gap={2}
       >
         {products.map((p) => (
           <MenuProduct
@@ -40,7 +40,7 @@ function Menu() {
           />
         ))}
       </Box>
-    </>
+    </div>
   );
 }
 

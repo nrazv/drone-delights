@@ -332,7 +332,7 @@
       "brand": "Wendy's",
       "price": 2.99,
       "calories": 490,
-      "image": "https://via.placeholder.com/100x100?text=Strawberry+Shake"
+      "image": "https://www.cookingclassy.com/wp-content/uploads/2024/05/strawberry-milkshake-4-1024x1536.jpg"
     },
     {
       "id": 113,
@@ -341,7 +341,7 @@
       "brand": "McDonald's",
       "price": 1.89,
       "calories": 5,
-      "image": "https://via.placeholder.com/100x100?text=Hot+Coffee"
+      "image": "https://www.wallpapergap.com/cdn/24/392/cup-of-coffee-wallpaper-5616x3744.jpg"
     },
     {
       "id": 114,
@@ -350,7 +350,7 @@
       "brand": "Minute Maid",
       "price": 2.19,
       "calories": 150,
-      "image": "https://via.placeholder.com/100x100?text=OJ"
+      "image": "https://www.organicfacts.net/wp-content/uploads/orangejuice-1.jpg"
     },
     {
       "id": 115,
@@ -359,7 +359,7 @@
       "brand": "Dasani",
       "price": 1.29,
       "calories": 0,
-      "image": "https://via.placeholder.com/100x100?text=Water"
+      "image": "https://www.evian.com/fileadmin/user_upload/gb/Products/Core_Range/Core_Range_-_EVIAN-500ML-BOTTLE.png"
     },
     {
       "id": 116,
@@ -368,7 +368,7 @@
       "brand": "Coca-Cola",
       "price": 2.19,
       "calories": 220,
-      "image": "https://via.placeholder.com/100x100?text=Cherry+Coke"
+      "image": "https://www.cokesolutions.com/content/cokesolutions/site/us/en/products/brands/coca-cola/coca-cola-cherry.main-image.434-624.png"
     },
     {
       "id": 117,
@@ -377,34 +377,7 @@
       "brand": "Pepsi",
       "price": 1.99,
       "calories": 240,
-      "image": "https://via.placeholder.com/100x100?text=Mountain+Dew"
-    },
-    {
-      "id": 118,
-      "name": "Dr Pepper",
-      "category": "Drink",
-      "brand": "Dr Pepper",
-      "price": 1.99,
-      "calories": 200,
-      "image": "https://via.placeholder.com/100x100?text=Dr+Pepper"
-    },
-    {
-      "id": 119,
-      "name": "Frozen Lemonade",
-      "category": "Drink",
-      "brand": "Chick-fil-A",
-      "price": 2.99,
-      "calories": 300,
-      "image": "https://via.placeholder.com/100x100?text=Frozen+Lemonade"
-    },
-    {
-      "id": 120,
-      "name": "Root Beer Float",
-      "category": "Drink",
-      "brand": "A&W",
-      "price": 2.99,
-      "calories": 360,
-      "image": "https://via.placeholder.com/100x100?text=Float"
+      "image": "https://deliveryman.ro/5179-thickbox_default/mountain-dew-500-ml.jpg"
     }
   ],
   "bestSelling": [
