@@ -6,9 +6,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-function SearchAndFilter() {
+function SearchAndFilter({ handelSearch }) {
   return (
-    <Box mb={1} mt={4} display={"flex"} justifyContent={"center"}>
+    <Box mb={4} mt={4} display={"flex"} justifyContent={"center"}>
       <Paper
         component="form"
         sx={{
@@ -19,7 +19,13 @@ function SearchAndFilter() {
         }}
         elevation={3}
       >
-        <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search" />
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search"
+          onChange={(e) => {
+            handelSearch(e);
+          }}
+        />
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />
         </IconButton>
