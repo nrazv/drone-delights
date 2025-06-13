@@ -30,7 +30,7 @@
     {
       "id": 4,
       "name": "Chicken Nuggets (6 pcs)",
-      "category": "Chicken",
+      "category": "Mains",
       "brand": "McDonald's",
       "price": 4.29,
       "calories": 270,
@@ -66,7 +66,7 @@
     {
       "id": 8,
       "name": "Chicken Sandwich",
-      "category": "Sandwich",
+      "category": "Mains",
       "brand": "Chick-fil-A",
       "price": 4.99,
       "calories": 440,
@@ -75,7 +75,7 @@
     {
       "id": 9,
       "name": "Spicy Chicken Sandwich",
-      "category": "Sandwich",
+      "category": "Mains",
       "brand": "Popeyes",
       "price": 5.49,
       "calories": 490,
@@ -84,7 +84,7 @@
     {
       "id": 10,
       "name": "Taco (Beef)",
-      "category": "Taco",
+      "category": "Mains",
       "brand": "Taco Bell",
       "price": 1.49,
       "calories": 170,
@@ -93,7 +93,7 @@
     {
       "id": 11,
       "name": "Burrito",
-      "category": "Wrap",
+      "category": "Mains",
       "brand": "Taco Bell",
       "price": 4.29,
       "calories": 420,
@@ -138,7 +138,7 @@
     {
       "id": 16,
       "name": "Grilled Chicken Wrap",
-      "category": "Wrap",
+      "category": "Mains",
       "brand": "Wendy's",
       "price": 3.99,
       "calories": 320,
@@ -147,7 +147,7 @@
     {
       "id": 17,
       "name": "Fish Sandwich",
-      "category": "Sandwich",
+      "category": "Mains",
       "brand": "McDonald's",
       "price": 3.99,
       "calories": 380,
@@ -156,7 +156,7 @@
     {
       "id": 18,
       "name": "Hash Browns",
-      "category": "Breakfast",
+      "category": "Mains",
       "brand": "McDonald's",
       "price": 1.59,
       "calories": 150,
@@ -165,7 +165,7 @@
     {
       "id": 19,
       "name": "Sausage McMuffin",
-      "category": "Breakfast",
+      "category": "Mains",
       "brand": "McDonald's",
       "price": 2.79,
       "calories": 400,
@@ -174,7 +174,7 @@
     {
       "id": 20,
       "name": "Egg & Cheese Biscuit",
-      "category": "Breakfast",
+      "category": "Mains",
       "brand": "Chick-fil-A",
       "price": 3.29,
       "calories": 450,
@@ -210,7 +210,7 @@
     {
       "id": 24,
       "name": "Soft Pretzel",
-      "category": "Snack",
+      "category": "Sides",
       "brand": "Auntie Anne's",
       "price": 2.99,
       "calories": 340,
@@ -219,7 +219,7 @@
     {
       "id": 25,
       "name": "Hot Dog",
-      "category": "Snack",
+      "category": "Mains",
       "brand": "Sonic",
       "price": 2.49,
       "calories": 310,
@@ -228,7 +228,7 @@
     {
       "id": 26,
       "name": "BBQ Chicken Wings (5 pcs)",
-      "category": "Chicken",
+      "category": "Sides",
       "brand": "Wingstop",
       "price": 5.99,
       "calories": 500,
@@ -237,7 +237,7 @@
     {
       "id": 27,
       "name": "Nachos Supreme",
-      "category": "Snack",
+      "category": "Sides",
       "brand": "Taco Bell",
       "price": 3.99,
       "calories": 460,
