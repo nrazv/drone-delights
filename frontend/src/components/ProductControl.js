@@ -9,7 +9,7 @@ function ProductControl() {
     <ButtonGroup size="small" variant="contained">
       <Button>-</Button>
       <Button disabled>{amount}</Button>
-      <Button>+</Button>
+      <Button onClick={() => setAmount(amount + 1)}>+</Button>
     </ButtonGroup>
   );
 }

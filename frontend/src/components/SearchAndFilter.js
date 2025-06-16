@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
@@ -13,22 +13,43 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
 const categories = Object.freeze({
-  BURGERS: "Burgers",
+  BURGERS: "Burger",
   MAINS: "Mains",
   DESSERT: "Dessert",
-  DRINKS: "Drinks",
+  DRINKS: "Drink",
   SIDES: "Sides",
 });
 
-function SearchAndFilter({ handelSearch }) {
+function SearchAndFilter({ handelSearch, handelFilterChange }) {
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategories((items) => {
+      if (items.includes(category)) {
+        return items.filter((item) => item !== category);
+      } else {
+        return [...items, category];
+      }
+    });
+  };
+
+  const isCategorySelected = (category) =>
+    selectedCategories.includes(category);
+
+  const handleReset = () => {
+    setSelectedCategories([]);
+  };
+
   return (
     <Box mb={4} mt={4} display={"flex"} justifyContent={"center"}>
       <Paper
@@ -80,21 +101,38 @@ function SearchAndFilter({ handelSearch }) {
           <Typography variant="subtitle1" fontWeight="bold">
             Pick Your Craving
           </Typography>
+          <Button
+            disableElevation
+            variant="text"
+            sx={{ textTransform: "none", marginLeft: "8px" }}
+            onClick={handleReset}
+          >
+            Reset
+          </Button>
         </MenuItem>
         {Object.entries(categories).map(([key, value]) => (
           <MenuItem disableRipple key={key} divider>
-            <FormControlLabel control={<Checkbox />} label={value} />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={() => handleCategoryChange(value)}
+                  checked={isCategorySelected(value)}
+                />
+              }
+              label={value}
+            />
           </MenuItem>
         ))}
 
         <Button
           sx={{
-            width: "200px",
+            width: "250px",
             margin: "15px 5px 0px 5px",
             textTransform: "none",
           }}
           variant="contained"
           disableElevation
+          onClick={() => handelFilterChange(selectedCategories)}
         >
           <Typography variant="subtitle1" fontWeight="200">
             Show products

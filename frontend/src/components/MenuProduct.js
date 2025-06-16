@@ -1,9 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./ProductMenu.css";
-import ProductControl from "./ProductControl";
+import Button from "@mui/material/Button";
+import ProductsContext from "../state/ProductsContext";
 
-function MenuProduct({ name, brand, price, calories, image }) {
+function MenuProduct({ product }) {
+  const { addProduct } = React.useContext(ProductsContext);
   return (
     <Box
       margin={2}
@@ -18,12 +20,18 @@ function MenuProduct({ name, brand, price, calories, image }) {
         border: "solid 3px gray",
       }}
     >
-      <img className="product-image" src={image} />
+      <img className="product-image" alt={product.name} src={product.image} />
       <Typography variant="subtitle2" mt={1}>
-        {name} - {price} $
+        {product.name} - {product.price} $
       </Typography>
       <div style={{ marginTop: "10px" }}>
-        <ProductControl />
+        <Button
+          size="small"
+          variant="contained"
+          onClick={() => addProduct(product)}
+        >
+          Add to cart
+        </Button>
       </div>
     </Box>
   );
