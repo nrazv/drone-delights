@@ -9,17 +9,16 @@ import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartItem from "./ShoppingCartItem";
 import { Link } from "react-router-dom";
-import ProductsContext from "../state/ProductsContext";
 import { Button } from "@mui/material";
-import { MenuList } from "@mui/material";
+import AppContext from "../state/AppContext";
 
 const ITEM_HEIGHT = 80;
 
 function Navbar() {
-  const { shoppingCartId } = React.useContext(ProductsContext);
+  const { shoppingCartId } = React.useContext(AppContext);
   const [cartItems, setCartItems] = React.useState([]);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,7 +29,7 @@ function Navbar() {
 
   const getCartItems = async () => {
     const apiUrl = "http://localhost:3004/shoppingCarts";
-    const shoppingCartId = JSON.parse(localStorage.getItem("cartId"));
+
     try {
       const URL = `${apiUrl}?cartId=${shoppingCartId}`;
       const response = await fetch(URL, {

@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ProductsProvider } from "./state/ProductsContext";
+import { AppContextProvider } from "./state/AppContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ProductsProvider>
+    <AppContextProvider>
       <App />
-    </ProductsProvider>
+    </AppContextProvider>
   </React.StrictMode>
 );
 

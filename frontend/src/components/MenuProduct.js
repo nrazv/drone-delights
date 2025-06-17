@@ -2,20 +2,20 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./ProductMenu.css";
 import Button from "@mui/material/Button";
-import ProductsContext from "../state/ProductsContext";
 import {
   getCartProductById,
   updateQuantity,
 } from "../utilities/fetchUtilities";
+import AppContext from "../state/AppContext";
 
 function MenuProduct({ product }) {
-  const { shoppingCartId } = React.useContext(ProductsContext);
+  const { shoppingCartId } = React.useContext(AppContext);
   const apiUrl = "http://localhost:3004/shoppingCarts";
 
   const addProduct = async (product) => {
     const productInCart = await getCartProductById(product);
 
-    if (productInCart.id == product.id) {
+    if (productInCart.id === product.id) {
       await updateQuantity(productInCart);
       return;
     }

@@ -1,19 +1,19 @@
 import { createContext, useState } from "react";
 
-const ProductsContext = createContext([]);
-export default ProductsContext;
+const AppContext = createContext([]);
+export default AppContext;
 
-export function ProductsProvider(props) {
+export function AppContextProvider(props) {
   const [shoppingCartId, setShoppingCartId] = useState();
 
   return (
-    <ProductsContext.Provider
+    <AppContext.Provider
       value={{
         shoppingCartId,
         setShoppingCartId,
       }}
     >
       {props.children}
-    </ProductsContext.Provider>
+    </AppContext.Provider>
   );
 }

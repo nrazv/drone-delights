@@ -3,13 +3,13 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
-import ProductsContext, { ProductsProvider } from "./state/ProductsContext";
 import LocalStorageManager from "./state/LocalStorageManager";
 import { useContext, useEffect } from "react";
 import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
+import AppContext from "./state/AppContext";
 
 function App() {
-  const { setShoppingCartId, shoppingCartId } = useContext(ProductsContext);
+  const { shoppingCartId, setShoppingCartId } = useContext(AppContext);
   const localStorageManager = new LocalStorageManager("cartId");
 
   const setCartId = () => {
