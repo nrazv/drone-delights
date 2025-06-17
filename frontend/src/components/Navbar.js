@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import React, { useEffect } from "react";
+import React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -11,13 +11,12 @@ import ShoppingCartItem from "./ShoppingCartItem";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import Badge from "@mui/material/Badge";
-import LocalStorageManager from "../state/LocalStorageManager";
+import AppContext from "../state/AppContext";
 
 const ITEM_HEIGHT = 80;
-const localStorageManager = new LocalStorageManager("cartId");
 
 function Navbar() {
-  const [cartItems, setCartItems] = React.useState([]);
+  const { cartItems } = React.useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -28,26 +27,6 @@ function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const getCartItems = async () => {
-    const apiUrl = "http://localhost:3004/shoppingCarts";
-    const cartId = localStorageManager.getItem();
-    try {
-      const URL = `${apiUrl}?cartId=${cartId}`;
-      const response = await fetch(URL, {
-        headers: { Accept: "application/json" },
-      });
-      const data = await response.json();
-      setCartItems([...data]);
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    async function fetchItems() {
-      await getCartItems();
-    }
-    fetchItems();
-  }, [open]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -3,13 +3,14 @@ import { Box, Typography } from "@mui/material";
 import "./ProductMenu.css";
 import Button from "@mui/material/Button";
 import {
+  getCartItems,
   getCartProductById,
   updateQuantity,
 } from "../utilities/fetchUtilities";
 import AppContext from "../state/AppContext";
 
 function MenuProduct({ product }) {
-  const { shoppingCartId } = React.useContext(AppContext);
+  const { shoppingCartId, setCartItems } = React.useContext(AppContext);
   const apiUrl = "http://localhost:3004/shoppingCarts";
 
   const addProduct = async (product) => {
@@ -17,6 +18,8 @@ function MenuProduct({ product }) {
 
     if (productInCart.id === product.id) {
       await updateQuantity(productInCart);
+      const data = await getCartItems();
+      setCartItems([...data]);
       return;
     }
 
@@ -32,6 +35,9 @@ function MenuProduct({ product }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(cartItem),
+    }).then(async () => {
+      const data = await getCartItems();
+      setCartItems([...data]);
     });
   };
 

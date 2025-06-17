@@ -7,11 +7,12 @@ import LocalStorageManager from "./state/LocalStorageManager";
 import { useContext, useEffect } from "react";
 import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
 import AppContext from "./state/AppContext";
+import { getCartItems } from "./utilities/fetchUtilities";
 
 const localStorageManager = new LocalStorageManager("cartId");
 
 function App() {
-  const { setShoppingCartId } = useContext(AppContext);
+  const { setShoppingCartId, setCartItems } = useContext(AppContext);
 
   const setCartId = () => {
     GenerateCartIdIfNull();
@@ -20,6 +21,11 @@ function App() {
   };
 
   useEffect(() => {
+    async function fetchItems() {
+      const data = await getCartItems();
+      setCartItems([...data]);
+    }
+    fetchItems();
     setCartId();
   }, []);
 
