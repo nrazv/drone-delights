@@ -4,20 +4,15 @@ const ProductsContext = createContext([]);
 export default ProductsContext;
 
 export function ProductsProvider(props) {
-  const [products, setProducts] = useState([]);
-
-  const addProduct = (product) =>
-    setProducts((products) => {
-      return [product, ...products];
-    });
-
-  const removeProduct = (product) =>
-    setProducts((products) => {
-      return products.filter((p) => p.id !== product.id);
-    });
+  const [shoppingCartId, setShoppingCartId] = useState();
 
   return (
-    <ProductsContext.Provider value={{ products, addProduct, removeProduct }}>
+    <ProductsContext.Provider
+      value={{
+        shoppingCartId,
+        setShoppingCartId,
+      }}
+    >
       {props.children}
     </ProductsContext.Provider>
   );

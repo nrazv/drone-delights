@@ -3,9 +3,38 @@ import { Box, Typography } from "@mui/material";
 import "./ProductMenu.css";
 import Button from "@mui/material/Button";
 import ProductsContext from "../state/ProductsContext";
+import {
+  getCartProductById,
+  updateQuantity,
+} from "../utilities/fetchUtilities";
 
 function MenuProduct({ product }) {
-  const { addProduct } = React.useContext(ProductsContext);
+  const { shoppingCartId } = React.useContext(ProductsContext);
+  const apiUrl = "http://localhost:3004/shoppingCarts";
+
+  const addProduct = async (product) => {
+    const productInCart = await getCartProductById(product);
+
+    if (productInCart.id == product.id) {
+      await updateQuantity(productInCart);
+      return;
+    }
+
+    const cartItem = {
+      ...product,
+      cartId: shoppingCartId,
+      quantity: 1,
+    };
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItem),
+    });
+  };
+
   return (
     <Box
       margin={2}

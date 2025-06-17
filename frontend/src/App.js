@@ -3,20 +3,47 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
-import { ProductsProvider } from "./state/ProductsContext";
+import ProductsContext, { ProductsProvider } from "./state/ProductsContext";
+import LocalStorageManager from "./state/LocalStorageManager";
+import { useContext, useEffect } from "react";
+import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
 
 function App() {
+  const { setShoppingCartId, shoppingCartId } = useContext(ProductsContext);
+  const localStorageManager = new LocalStorageManager("cartId");
+
+  const setCartId = () => {
+    GenerateCartIdIfNull();
+    const cartId = localStorageManager.getItem();
+    setShoppingCartId(cartId);
+  };
+
+  const getShoppingCartItems = () => {
+    const apiUrl = `http://localhost:3004/shoppingCarts?cartId=${shoppingCartId}`;
+
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => {})
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    setCartId();
+    getShoppingCartItems();
+  }, []);
+
   return (
     <Router>
-      <ProductsProvider>
-        <div className="App">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu />} />
-          </Routes>
-        </div>
-      </ProductsProvider>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

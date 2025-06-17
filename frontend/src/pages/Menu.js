@@ -3,7 +3,6 @@ import SearchAndFilter from "../components/SearchAndFilter";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import MenuProduct from "../components/MenuProduct";
-import ProductsContext from "../state/ProductsContext";
 
 function Menu() {
   const [products, setProducts] = useState([]);
