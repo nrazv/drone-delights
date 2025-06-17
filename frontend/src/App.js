@@ -8,9 +8,10 @@ import { useContext, useEffect } from "react";
 import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
 import AppContext from "./state/AppContext";
 
+const localStorageManager = new LocalStorageManager("cartId");
+
 function App() {
-  const { shoppingCartId, setShoppingCartId } = useContext(AppContext);
-  const localStorageManager = new LocalStorageManager("cartId");
+  const { setShoppingCartId } = useContext(AppContext);
 
   const setCartId = () => {
     GenerateCartIdIfNull();
@@ -18,21 +19,8 @@ function App() {
     setShoppingCartId(cartId);
   };
 
-  const getShoppingCartItems = () => {
-    const apiUrl = `http://localhost:3004/shoppingCarts?cartId=${shoppingCartId}`;
-
-    fetch(apiUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch");
-        return res.json();
-      })
-      .then((data) => {})
-      .catch((err) => {});
-  };
-
   useEffect(() => {
     setCartId();
-    getShoppingCartItems();
   }, []);
 
   return (

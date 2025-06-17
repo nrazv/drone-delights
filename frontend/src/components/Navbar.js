@@ -10,28 +10,30 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartItem from "./ShoppingCartItem";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import AppContext from "../state/AppContext";
+import Badge from "@mui/material/Badge";
+import LocalStorageManager from "../state/LocalStorageManager";
 
 const ITEM_HEIGHT = 80;
+const localStorageManager = new LocalStorageManager("cartId");
 
 function Navbar() {
-  const { shoppingCartId } = React.useContext(AppContext);
   const [cartItems, setCartItems] = React.useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const getCartItems = async () => {
     const apiUrl = "http://localhost:3004/shoppingCarts";
-
+    const cartId = localStorageManager.getItem();
     try {
-      const URL = `${apiUrl}?cartId=${shoppingCartId}`;
+      const URL = `${apiUrl}?cartId=${cartId}`;
       const response = await fetch(URL, {
         headers: { Accept: "application/json" },
       });
@@ -41,9 +43,10 @@ function Navbar() {
   };
 
   useEffect(() => {
-    (async () => {
+    async function fetchItems() {
       await getCartItems();
-    })();
+    }
+    fetchItems();
   }, [open]);
 
   return (
@@ -73,7 +76,9 @@ function Navbar() {
             </Typography>
           </Link>
           <IconButton aria-label="cart" onClick={handleClick}>
-            <ShoppingCartIcon sx={{ fill: "black", fontSize: 28 }} />
+            <Badge badgeContent={cartItems.length} color="primary">
+              <ShoppingCartIcon sx={{ fill: "black", fontSize: 28 }} />
+            </Badge>
           </IconButton>
           <Menu
             id="basic-menu"
