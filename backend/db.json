@@ -426,39 +426,5 @@
       "image": "https://cabbieja.com/cdn/shop/products/whopperwithcheese.png?v=1621982488"
     }
   ],
-  "shoppingCarts": [
-    {
-      "id": 1,
-      "name": "Cheeseburger",
-      "category": "Burger",
-      "brand": "McDonald's",
-      "price": 3.99,
-      "calories": 300,
-      "image": "https://www.mcdonalds.ro/sites/default/files/styles/500x500/public/field_product_image/2022-07/CB.png?itok=jtRojji4",
-      "cartId": "b9b4bc64-0bef-45c0-a93d-7eeaad46113b",
-      "quantity": 2
-    },
-    {
-      "id": 2,
-      "name": "Big Mac",
-      "category": "Burger",
-      "brand": "McDonald's",
-      "price": 5.49,
-      "calories": 550,
-      "image": "https://www.mcdonalds.ro/sites/default/files/styles/500x500/public/field_product_image/2022-07/BM.png?itok=JaRbeO6z",
-      "cartId": "b9b4bc64-0bef-45c0-a93d-7eeaad46113b",
-      "quantity": 1
-    },
-    {
-      "id": 3,
-      "name": "Whopper",
-      "category": "Burger",
-      "brand": "Burger King",
-      "price": 5.99,
-      "calories": 660,
-      "image": "https://cabbieja.com/cdn/shop/products/whopperwithcheese.png?v=1621982488",
-      "cartId": "b9b4bc64-0bef-45c0-a93d-7eeaad46113b",
-      "quantity": 1
-    }
-  ]
+  "shoppingCarts": []
 }

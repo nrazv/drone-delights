@@ -87,12 +87,7 @@ function Navbar() {
                     key={p.id}
                     sx={{ justifyContent: "center" }}
                   >
-                    <ShoppingCartItem
-                      name={p.name}
-                      price={p.price}
-                      image={p.image}
-                      quantity={p.quantity}
-                    />
+                    <ShoppingCartItem product={p} />
                   </MenuItem>
                 ))}
             </div>

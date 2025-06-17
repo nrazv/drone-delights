@@ -13,13 +13,23 @@ export const getCartProductById = async (product) => {
   } catch (err) {}
 };
 
-export const updateQuantity = async (product) => {
+export const removeProductFromCart = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:3004/shoppingCarts/${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+  }
+};
+
+export const updateQuantity = async (product, quantity) => {
   await fetch(`${apiUrl}/${product.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ quantity: product.quantity + 1 }),
+    body: JSON.stringify({ quantity: quantity }),
   });
 };
 

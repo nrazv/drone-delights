@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import ProductControl from "./ProductControl";
-function ShoppingCartItem({ name, price, image, quantity, id }) {
+function ShoppingCartItem({ product }) {
   return (
     <Box
       borderRadius={1}
@@ -14,16 +14,16 @@ function ShoppingCartItem({ name, price, image, quantity, id }) {
     >
       <img
         className="product-image"
-        src={image}
+        src={product.image}
         style={{ width: 60, height: 60 }}
       />
       <Typography textAlign={"center"} variant="subtitle2">
-        {name}
+        {product.name}
       </Typography>
       <Typography textAlign={"center"} variant="subtitle2">
-        {price} $
+        {product.price} $
       </Typography>
-      <ProductControl quantity={quantity} id={id} />
+      <ProductControl product={product} />
     </Box>
   );
 }

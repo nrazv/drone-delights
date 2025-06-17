@@ -17,7 +17,8 @@ function MenuProduct({ product }) {
     const productInCart = await getCartProductById(product);
 
     if (productInCart.id === product.id) {
-      await updateQuantity(productInCart);
+      const quantity = productInCart.quantity + 1;
+      await updateQuantity(productInCart, quantity);
       const data = await getCartItems();
       setCartItems([...data]);
       return;
