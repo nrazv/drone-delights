@@ -9,6 +9,7 @@ import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
 import AppContext from "./state/AppContext";
 import useCartUtilities from "./utilities/fetchUtilities";
 import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 
 const localStorageManager = new LocalStorageManager("cartId");
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
     </Router>

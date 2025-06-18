@@ -1,11 +1,24 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Snackbar, Typography } from "@mui/material";
 import "./ProductMenu.css";
 import Button from "@mui/material/Button";
 import useCartUtilities from "../utilities/fetchUtilities";
 
 function MenuProduct({ product }) {
   const { addProduct } = useCartUtilities();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <Box
@@ -29,11 +42,29 @@ function MenuProduct({ product }) {
         <Button
           size="small"
           variant="contained"
-          onClick={() => addProduct(product)}
+          onClick={() => {
+            addProduct(product);
+            handleClick();
+          }}
         >
           Add to cart
         </Button>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {product.name} added to cart !
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

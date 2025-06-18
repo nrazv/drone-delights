@@ -3,6 +3,7 @@ import React from "react";
 
 import ProductsTable from "../components/ProductsTable";
 import AppContext from "../state/AppContext";
+import OrderForm from "../components/OrderForm";
 
 function Checkout() {
   const { cartItems } = React.useContext(AppContext);
@@ -17,20 +18,17 @@ function Checkout() {
 
   return (
     <Box sx={{ p: 2, flexGrow: 1 }}>
-      <Typography
-        variant="h4"
-        gutterBottom
-        style={{
-          textAlign: "left",
-          textTransform: "uppercase",
-          fontWeight: "bold",
-          paddingLeft: 40,
-        }}
-      >
-        Your Cart
-      </Typography>
       <Grid container spacing={1} margin={3}>
         <Grid size={6}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            style={{
+              textAlign: "left",
+            }}
+          >
+            Your Cart
+          </Typography>
           <Box sx={{ height: 550 }}>
             <ProductsTable />
           </Box>
@@ -57,11 +55,23 @@ function Checkout() {
                 marginRight: 30,
               }}
             >
-              Total: {calculateTotal()}
+              Total: ${calculateTotal()}
             </Typography>
           </Box>
         </Grid>
-        <Grid size={6}>Column 2</Grid>
+        <Grid size={6}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            style={{
+              textAlign: "center",
+              marginBottom: 15,
+            }}
+          >
+            Enter your shipping address
+          </Typography>
+          <OrderForm />
+        </Grid>
       </Grid>
     </Box>
   );
