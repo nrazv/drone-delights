@@ -7,12 +7,14 @@ import LocalStorageManager from "./state/LocalStorageManager";
 import { useContext, useEffect } from "react";
 import GenerateCartIdIfNull from "./custom-hooks/GenerateCartIdIfNull";
 import AppContext from "./state/AppContext";
-import { getCartItems } from "./utilities/fetchUtilities";
+import useCartUtilities from "./utilities/fetchUtilities";
+import Checkout from "./pages/Checkout";
 
 const localStorageManager = new LocalStorageManager("cartId");
 
 function App() {
-  const { setShoppingCartId, setCartItems } = useContext(AppContext);
+  const { getCartItems } = useCartUtilities();
+  const { setShoppingCartId } = useContext(AppContext);
 
   const setCartId = () => {
     GenerateCartIdIfNull();
@@ -22,8 +24,7 @@ function App() {
 
   useEffect(() => {
     async function fetchItems() {
-      const data = await getCartItems();
-      setCartItems([...data]);
+      await getCartItems();
     }
     fetchItems();
     setCartId();
@@ -36,6 +37,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
     </Router>

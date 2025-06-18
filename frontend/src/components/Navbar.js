@@ -8,10 +8,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartItem from "./ShoppingCartItem";
-import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Button, colors } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import AppContext from "../state/AppContext";
+import { NavLink } from "react-router";
 
 const ITEM_HEIGHT = 80;
 
@@ -19,6 +20,11 @@ function Navbar() {
   const { cartItems } = React.useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
+  const goToCheckout = () => {
+    navigate("/checkout");
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,11 +34,18 @@ function Navbar() {
     setAnchorEl(null);
   };
 
+  const navLinkStyles = ({ isActive }) => {
+    return {
+      textDecoration: isActive ? "underline overline 2px" : "none",
+      color: "white",
+    };
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#FFA07A" }}>
         <Toolbar sx={{ ml: "auto" }}>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <NavLink to="/" style={navLinkStyles}>
             <Typography
               variant="h6"
               fontWeight="bold"
@@ -42,8 +55,8 @@ function Navbar() {
             >
               Home
             </Typography>
-          </Link>
-          <Link to="/menu" style={{ textDecoration: "none" }}>
+          </NavLink>
+          <NavLink to="/menu" style={navLinkStyles}>
             <Typography
               variant="h6"
               fontWeight="bold"
@@ -53,7 +66,7 @@ function Navbar() {
             >
               Menu
             </Typography>
-          </Link>
+          </NavLink>
           <IconButton aria-label="cart" onClick={handleClick}>
             <Badge badgeContent={cartItems.length} color="primary">
               <ShoppingCartIcon sx={{ fill: "black", fontSize: 28 }} />
@@ -80,7 +93,7 @@ function Navbar() {
                 overflowX: "hidden",
               }}
             >
-              {cartItems.length > 0 &&
+              {cartItems.length > 0 ? (
                 cartItems.map((p) => (
                   <MenuItem
                     disableRipple
@@ -89,14 +102,32 @@ function Navbar() {
                   >
                     <ShoppingCartItem product={p} />
                   </MenuItem>
-                ))}
+                ))
+              ) : (
+                <Typography
+                  variant="body2"
+                  fontWeight="bold"
+                  component="div"
+                  color="black"
+                  mx={3}
+                >
+                  Nothing in the cart
+                </Typography>
+              )}
             </div>
             <MenuItem
+              disabled={!cartItems.length > 0}
               disableRipple
               disableTouchRipple
               sx={{ justifyContent: "center" }}
             >
-              <Button size="small" fullWidth variant="contained" color="error">
+              <Button
+                size="small"
+                fullWidth
+                variant="contained"
+                color="error"
+                onClick={goToCheckout}
+              >
                 Checkout
               </Button>
             </MenuItem>

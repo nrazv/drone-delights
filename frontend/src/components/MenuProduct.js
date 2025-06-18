@@ -2,45 +2,10 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./ProductMenu.css";
 import Button from "@mui/material/Button";
-import {
-  getCartItems,
-  getCartProductById,
-  updateQuantity,
-} from "../utilities/fetchUtilities";
-import AppContext from "../state/AppContext";
+import useCartUtilities from "../utilities/fetchUtilities";
 
 function MenuProduct({ product }) {
-  const { shoppingCartId, setCartItems } = React.useContext(AppContext);
-  const apiUrl = "http://localhost:3004/shoppingCarts";
-
-  const addProduct = async (product) => {
-    const productInCart = await getCartProductById(product);
-
-    if (productInCart.id === product.id) {
-      const quantity = productInCart.quantity + 1;
-      await updateQuantity(productInCart, quantity);
-      const data = await getCartItems();
-      setCartItems([...data]);
-      return;
-    }
-
-    const cartItem = {
-      ...product,
-      cartId: shoppingCartId,
-      quantity: 1,
-    };
-
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(cartItem),
-    }).then(async () => {
-      const data = await getCartItems();
-      setCartItems([...data]);
-    });
-  };
+  const { addProduct } = useCartUtilities();
 
   return (
     <Box
