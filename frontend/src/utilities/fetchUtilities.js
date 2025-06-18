@@ -20,12 +20,10 @@ export default function useCartUtilities() {
 
   const removeProductFromCart = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:3004/shoppingCarts/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      await fetch(`http://localhost:3004/shoppingCarts/${id}`, {
+        method: "DELETE",
+      });
+      await getCartItems();
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -39,6 +37,7 @@ export default function useCartUtilities() {
       },
       body: JSON.stringify({ quantity: quantity }),
     });
+    await getCartItems();
   };
 
   const getCartItems = async () => {
@@ -54,42 +53,32 @@ export default function useCartUtilities() {
   };
 
   const increaseQuantity = async (product) => {
-    console.log(product);
-
     const quantity = product.quantity + 1;
     await updateQuantity(product, quantity);
-    await getCartItems();
   };
 
   const decreaseQuantity = async (product) => {
     const quantity = product.quantity - 1;
-
     if (quantity === 0) {
       await removeProductFromCart(product.id);
       await getCartItems();
       return;
     }
-
     await updateQuantity(product, quantity);
-    await getCartItems();
   };
 
   const addProduct = async (product) => {
     const productInCart = await getCartProductById(product);
-
     if (productInCart.id === product.id) {
       const quantity = productInCart.quantity + 1;
       await updateQuantity(productInCart, quantity);
-      await getCartItems();
       return;
     }
-
     const cartItem = {
       ...product,
       cartId: shoppingCartId,
       quantity: 1,
     };
-
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -100,5 +89,13 @@ export default function useCartUtilities() {
       await getCartItems();
     });
   };
-  return { addProduct, getCartItems, decreaseQuantity, increaseQuantity };
+
+  return {
+    addProduct,
+    getCartItems,
+    decreaseQuantity,
+    increaseQuantity,
+    updateQuantity,
+    removeProductFromCart,
+  };
 }

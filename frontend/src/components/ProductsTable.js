@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  Grid,
   IconButton,
   Paper,
   Table,
@@ -15,12 +14,20 @@ import {
 import TableRow from "@mui/material/TableRow";
 import AppContext from "../state/AppContext";
 import DeleteIcon from "@mui/icons-material/Delete";
+import useCartUtilities from "../utilities/fetchUtilities";
 
 function ProductsTable() {
+  const { updateQuantity, removeProductFromCart } = useCartUtilities();
   const { cartItems } = React.useContext(AppContext);
-  const onQtyChange = (id, item) => {
-    console.log(id, item);
+
+  const onQtyChange = (product, quantity) => {
+    if (quantity === 0) {
+      removeProductFromCart(product.id);
+      return;
+    }
+    updateQuantity(product, quantity);
   };
+
   const columns = [
     { dataKey: "product", label: "Product", width: 200, align: "center" },
     {
@@ -94,7 +101,10 @@ function ProductsTable() {
               </TableCell>
 
               <TableCell align="center">
-                <IconButton size="small">
+                <IconButton
+                  size="small"
+                  onClick={() => removeProductFromCart(item.id)}
+                >
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </TableCell>
