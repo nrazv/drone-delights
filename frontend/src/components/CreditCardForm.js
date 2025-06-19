@@ -1,15 +1,25 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 
-export function CreditCardForm({ onSubmit }) {
+export function CreditCardForm() {
   const [values, setValues] = useState({
     cardName: "",
     cardNumber: "",
     expDate: "",
     cvv: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const timer = useRef(undefined);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,10 +56,20 @@ export function CreditCardForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-
-    if (onSubmit) onSubmit(values);
-    else alert("Payment details valid!\n" + JSON.stringify(values, null, 2));
+    else {
+      setLoading(true);
+      timer.current = setTimeout(() => {
+        setLoading(false);
+        setOpen(true);
+      }, 2000);
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   return (
     <Box
@@ -109,9 +129,24 @@ export function CreditCardForm({ onSubmit }) {
         />
       </Box>
 
-      <Button variant="contained" type="submit" sx={{ mt: 1 }}>
+      <Button
+        variant="contained"
+        size="large"
+        type="submit"
+        sx={{ mt: 1 }}
+        loading={loading}
+      >
         Pay Now
       </Button>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+      >
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Thank you! Your payment was successful!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
