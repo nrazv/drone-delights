@@ -8,8 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
+import usePlaceOrder from "../custom-hooks/PlaceOrder";
 
 export function CreditCardForm() {
+  const { placeOrder } = usePlaceOrder();
   const [values, setValues] = useState({
     cardName: "",
     cardNumber: "",
@@ -58,6 +60,7 @@ export function CreditCardForm() {
     if (!validate()) return;
     else {
       setLoading(true);
+      placeOrder();
       timer.current = setTimeout(() => {
         setLoading(false);
         setOpen(true);

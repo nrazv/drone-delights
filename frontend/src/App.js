@@ -11,24 +11,17 @@ import useCartUtilities from "./utilities/fetchUtilities";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 
-const localStorageManager = new LocalStorageManager("cartId");
-
 function App() {
   const { getCartItems } = useCartUtilities();
-  const { setShoppingCartId } = useContext(AppContext);
-
-  const setCartId = () => {
-    GenerateCartIdIfNull();
-    const cartId = localStorageManager.getItem();
-    setShoppingCartId(cartId);
-  };
 
   useEffect(() => {
+    GenerateCartIdIfNull();
+
     async function fetchItems() {
       await getCartItems();
     }
+
     fetchItems();
-    setCartId();
   }, []);
 
   return (

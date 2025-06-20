@@ -2,89 +2,99 @@ import AppContext from "../state/AppContext";
 import React from "react";
 import LocalStorageManager from "../state/LocalStorageManager";
 
-const apiUrl = "http://localhost:3004/shoppingCarts";
+const API_URL = "http://localhost:3004/shoppingCarts";
 const localStorageManager = new LocalStorageManager("cartId");
 
 export default function useCartUtilities() {
-  const { setCartItems, shoppingCartId } = React.useContext(AppContext);
-
-  const getCartProductById = async (product) => {
-    try {
-      const URL = `${apiUrl}/${product.id}`;
-      const response = await fetch(URL, {
-        headers: { Accept: "application/json" },
-      });
-      return await response.json();
-    } catch (err) {}
-  };
+  const { setCartItems, shoppingCartId, setShoppingCartId } =
+    React.useContext(AppContext);
 
   const removeProductFromCart = async (id) => {
-    try {
-      await fetch(`http://localhost:3004/shoppingCarts/${id}`, {
-        method: "DELETE",
-      });
-      await getCartItems();
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
-
-  const updateQuantity = async (product, quantity) => {
-    await fetch(`${apiUrl}/${product.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ quantity: quantity }),
-    });
-    await getCartItems();
+    const cart = await getShoppingCart();
+    cart.products = cart.products.filter((p) => p.id != id);
+    await updateShoppingCart(cart);
   };
 
   const getCartItems = async () => {
-    const cartId = localStorageManager.getItem();
-    try {
-      const URL = `${apiUrl}?cartId=${cartId}`;
-      const response = await fetch(URL, {
-        headers: { Accept: "application/json" },
-      });
-      const data = await response.json();
-      setCartItems(data);
-    } catch (err) {}
-  };
-
-  const increaseQuantity = async (product) => {
-    const quantity = product.quantity + 1;
-    await updateQuantity(product, quantity);
+    const data = await getShoppingCart();
+    setCartItems(data.products);
   };
 
   const decreaseQuantity = async (product) => {
     const quantity = product.quantity - 1;
     if (quantity === 0) {
       await removeProductFromCart(product.id);
-      await getCartItems();
       return;
     }
-    await updateQuantity(product, quantity);
+    const cart = await getShoppingCart();
+    const productInCart = cart.products.find((e) => e.id === product.id);
+
+    if (productInCart) {
+      productInCart.quantity = productInCart.quantity - 1;
+      await updateShoppingCart(cart);
+    }
+  };
+
+  const increaseQuantity = async (product) => {
+    const cart = await getShoppingCart();
+    const productInCart = cart.products.find((e) => e.id === product.id);
+
+    if (productInCart) {
+      productInCart.quantity = productInCart.quantity + 1;
+      await updateShoppingCart(cart);
+    }
   };
 
   const addProduct = async (product) => {
-    const productInCart = await getCartProductById(product);
-    if (productInCart.id === product.id) {
-      const quantity = productInCart.quantity + 1;
-      await updateQuantity(productInCart, quantity);
-      return;
+    const cart = await getShoppingCart();
+
+    if (cart.id) {
+      const productInCart = cart.products.find((e) => e.id === product.id);
+
+      if (productInCart) {
+        await increaseQuantity(product);
+      } else {
+        cart.products.push({ ...product, quantity: 1 });
+        await updateShoppingCart(cart);
+      }
+    } else {
+      await createShoppingCart({
+        id: shoppingCartId,
+        products: [{ ...product, quantity: 1 }],
+      });
     }
-    const cartItem = {
-      ...product,
-      cartId: shoppingCartId,
-      quantity: 1,
-    };
-    fetch(apiUrl, {
+  };
+
+  const getShoppingCart = async () => {
+    const cartId = localStorageManager.getItem();
+    setShoppingCartId(cartId);
+    try {
+      const URL = `${API_URL}/${cartId}`;
+      const response = await fetch(URL, {
+        headers: { Accept: "application/json" },
+      });
+
+      return await response.json();
+    } catch (err) {}
+  };
+
+  const updateShoppingCart = async (cart) => {
+    await fetch(`${API_URL}/${shoppingCartId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cart),
+    }).then(async () => {
+      await getCartItems();
+    });
+  };
+
+  const createShoppingCart = async (shoppingCart) => {
+    fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cartItem),
+      body: JSON.stringify(shoppingCart),
     }).then(async () => {
       await getCartItems();
     });
@@ -95,7 +105,6 @@ export default function useCartUtilities() {
     getCartItems,
     decreaseQuantity,
     increaseQuantity,
-    updateQuantity,
     removeProductFromCart,
   };
 }

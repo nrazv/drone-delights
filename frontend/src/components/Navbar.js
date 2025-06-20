@@ -68,7 +68,7 @@ function Navbar() {
             </Typography>
           </NavLink>
           <IconButton aria-label="cart" onClick={handleClick}>
-            <Badge badgeContent={cartItems.length} color="primary">
+            <Badge badgeContent={cartItems && cartItems.length} color="primary">
               <ShoppingCartIcon sx={{ fill: "black", fontSize: 28 }} />
             </Badge>
           </IconButton>
@@ -93,7 +93,7 @@ function Navbar() {
                 overflowX: "hidden",
               }}
             >
-              {cartItems.length > 0 ? (
+              {cartItems && cartItems.length > 0 ? (
                 cartItems.map((p) => (
                   <MenuItem
                     disableRipple
@@ -115,22 +115,26 @@ function Navbar() {
                 </Typography>
               )}
             </div>
-            <MenuItem
-              disabled={!cartItems.length > 0}
-              disableRipple
-              disableTouchRipple
-              sx={{ justifyContent: "center" }}
-            >
-              <Button
-                size="small"
-                fullWidth
-                variant="contained"
-                color="error"
-                onClick={goToCheckout}
+            {cartItems ? (
+              <MenuItem
+                disabled={!cartItems.length > 0}
+                disableRipple
+                disableTouchRipple
+                sx={{ justifyContent: "center" }}
               >
-                Checkout
-              </Button>
-            </MenuItem>
+                <Button
+                  size="small"
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={goToCheckout}
+                >
+                  Checkout
+                </Button>
+              </MenuItem>
+            ) : (
+              ""
+            )}
           </Menu>
         </Toolbar>
       </AppBar>
