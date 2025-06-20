@@ -48,6 +48,7 @@ function SearchAndFilter({ handelSearch, handelFilterChange }) {
 
   const handleReset = () => {
     setSelectedCategories([]);
+    handelFilterChange([]);
   };
 
   return (

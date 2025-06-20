@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import usePlaceOrder from "../custom-hooks/PlaceOrder";
+import { useNavigate } from "react-router-dom";
 
 export function CreditCardForm() {
   const { placeOrder } = usePlaceOrder();
@@ -22,6 +23,7 @@ export function CreditCardForm() {
   const [errors, setErrors] = useState({});
   const timer = useRef(undefined);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +66,7 @@ export function CreditCardForm() {
       timer.current = setTimeout(() => {
         setLoading(false);
         setOpen(true);
+        navigate("/");
       }, 2000);
     }
   };
