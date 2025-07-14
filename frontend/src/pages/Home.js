@@ -28,6 +28,7 @@ function Home() {
       </Typography>
       <Box
         mx={2}
+        mt={5}
         sx={{
           display: "flex",
           flexDirection: "row",

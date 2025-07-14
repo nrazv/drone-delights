@@ -17,7 +17,11 @@ export default function useCartUtilities() {
 
   const getCartItems = async () => {
     const data = await getShoppingCart();
-    setCartItems(data.products);
+    if (data) {
+      setCartItems(data.products);
+    } else {
+      setCartItems([]);
+    }
   };
 
   const decreaseQuantity = async (product) => {
@@ -48,7 +52,7 @@ export default function useCartUtilities() {
   const addProduct = async (product) => {
     const cart = await getShoppingCart();
 
-    if (cart.id) {
+    if (cart && cart.id) {
       const productInCart = cart.products.find((e) => e.id === product.id);
 
       if (productInCart) {
@@ -100,11 +104,20 @@ export default function useCartUtilities() {
     });
   };
 
+  const updateQuantity = async (product, quantity) => {
+    const cart = await getShoppingCart();
+    let p = cart.products.find((e) => e.id === product.id);
+    p.quantity = quantity;
+
+    await updateShoppingCart(cart);
+  };
+
   return {
     addProduct,
     getCartItems,
     decreaseQuantity,
     increaseQuantity,
     removeProductFromCart,
+    updateQuantity,
   };
 }
